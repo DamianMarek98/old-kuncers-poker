@@ -1,0 +1,122 @@
+package deny.poker.poc;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class SetsFinderTest {
+
+    @Test
+    void givenSetOfCardsWithAceFindHighestCardShouldReturnAce() {
+        //given
+        final Card ace = new Card(Color.RED_DIAMOND, Figure.ACE);
+        var cards = List.of(ace, new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.RED_DIAMOND, Figure.NINE));
+        //when
+        var result = SetsFinder.findHighestCard(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertEquals(List.of(ace), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithHighestCardJackFindHighestCardShouldReturnJack() {
+        //given
+        final Card jack = new Card(Color.RED_DIAMOND, Figure.JACK);
+        var cards = List.of(jack, new Card(Color.BLACK_CLUB, Figure.TEN), new Card(Color.RED_DIAMOND, Figure.JACK));
+        //when
+        var result = SetsFinder.findHighestCard(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertEquals(List.of(jack), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithPairOfAcesFindHighestCardShouldReturnPairOfAces() {
+        //given
+        final Card ace1 = new Card(Color.RED_DIAMOND, Figure.ACE);
+        final Card ace2 = new Card(Color.BLACK_CLUB, Figure.ACE);
+        var cards = List.of(ace1, ace2, new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.RED_DIAMOND, Figure.NINE));
+        //when
+        var result = SetsFinder.findHighestPair(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertEquals(List.of(ace1, ace2), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithPairOfNinesAndPairOfJacksFindHighestPairShouldReturnPairOfJacks() {
+        //given
+        final Card jack1 = new Card(Color.RED_DIAMOND, Figure.JACK);
+        final Card jack2 = new Card(Color.BLACK_CLUB, Figure.JACK);
+        var cards = List.of(jack1, jack2, new Card(Color.BLACK_CLUB, Figure.NINE), new Card(Color.RED_DIAMOND, Figure.NINE));
+        //when
+        var result = SetsFinder.findHighestPair(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertEquals(List.of(jack1, jack2), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithNoPairsFindHighestPairShouldReturnEmptyResult() {
+        //given
+        var cards = List.of(new Card(Color.RED_HEART, Figure.KING), new Card(Color.BLACK_CLUB, Figure.TEN), new Card(Color.RED_DIAMOND, Figure.NINE));
+        //when
+        var result = SetsFinder.findHighestPair(cards);
+        //then
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void givenSetOfCardsWithPairOfNinesAndPairOfJacksFindTwoHighestPairsShouldReturnPairOfNinesAndPairOfJacks() {
+        //given
+        final Card jack1 = new Card(Color.RED_DIAMOND, Figure.JACK);
+        final Card jack2 = new Card(Color.BLACK_CLUB, Figure.JACK);
+        final Card nine1 = new Card(Color.BLACK_CLUB, Figure.NINE);
+        final Card nine2 = new Card(Color.RED_DIAMOND, Figure.NINE);
+        var cards = List.of(jack1, jack2, nine1, nine2, new Card(Color.BLACK_CLUB, Figure.ACE));
+        //when
+        var result = SetsFinder.findTwoHighestPairs(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertEquals(List.of(jack1, jack2, nine1, nine2), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithPairOfNinesAndPairOfJacksAndPairOfAcesFindTwoHighestPairsShouldReturnPairOfAcesAndPairOfJacks() {
+        //given
+        final Card jack1 = new Card(Color.RED_DIAMOND, Figure.JACK);
+        final Card jack2 = new Card(Color.BLACK_CLUB, Figure.JACK);
+        final Card ace1 = new Card(Color.BLACK_CLUB, Figure.ACE);
+        final Card ace2 = new Card(Color.RED_DIAMOND, Figure.ACE);
+        var cards = List.of(ace1, ace2, jack1, jack2, new Card(Color.BLACK_CLUB, Figure.NINE), new Card(Color.RED_HEART, Figure.NINE), new Card(Color.BLACK_CLUB, Figure.TEN));
+        //when
+        var result = SetsFinder.findTwoHighestPairs(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertEquals(List.of(ace1, ace2, jack1, jack2), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithPairOfNinesFindTwoHighestPairsShouldReturnEmptyResult() {
+        //given
+        final Card nine1 = new Card(Color.BLACK_CLUB, Figure.NINE);
+        final Card nine2 = new Card(Color.RED_DIAMOND, Figure.NINE);
+        var cards = List.of(nine1, nine2, new Card(Color.BLACK_CLUB, Figure.ACE));
+        //when
+        var result = SetsFinder.findTwoHighestPairs(cards);
+        //then
+        assertFalse(result.isPresent());
+    }
+
+    @Test
+    void givenSetOfCardsWithNoPairsFindTwoHighestPairsShouldReturnEmptyResult() {
+        //given
+        var cards = List.of(new Card(Color.BLACK_CLUB, Figure.ACE), new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
+        //when
+        var result = SetsFinder.findTwoHighestPairs(cards);
+        //then
+        assertFalse(result.isPresent());
+    }
+}

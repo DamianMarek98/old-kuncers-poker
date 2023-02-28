@@ -1,46 +1,20 @@
 package deny.poker.poc;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public enum Hand implements CardLayout {
-    HIGH_CARD("High Card", 0, List.of(1), false, cards -> cards.stream()
-            .max(Comparator.comparing(card -> card.figure().getValue()))
-            .map(List::of)),
-    PAIR("Pair", 1, List.of(2), false, Hand::findHighestPair),
-    TWO_PAIRS("Two Pairs", 2, List.of(2, 2), false, cards -> {
-        var cardsInPlay = new ArrayList<>(cards);
-        var highestPair = findHighestPair(cardsInPlay);
-        if (highestPair.isEmpty()) {
-            return Optional.empty();
-        }
-        cardsInPlay.removeAll(highestPair.get());
-        var secondHighestPair = findHighestPair(cardsInPlay);
-        if (secondHighestPair.isEmpty()) {
-            return Optional.empty();
-        }
-        var pairs = highestPair.get();
-        pairs.addAll(secondHighestPair.get());
-        return Optional.of(pairs);
-    }),
-    SMALL_STRAIGHT("Small Straight", 3, List.of(), false, findHighest),
-    HUGE_STRAIGHT("Huge Straight", 4, List.of(), false, findHighest),
-    THREE_OF_KIND("Three of Kind", 5, List.of(3), false, findHighest),
-    FULL("Full", 6, List.of(3, 2), false, findHighest),
-    COLOR("Color", 7, List.of(), true, findHighest),
-    FOUR_OF_KIND("Four of Kind", 8, List.of(4), false, findHighest),
-    POKER("Poker", 9, List.of(), true, findHighest);
-
-    private static Optional<List<Card>> findHighestPair(List<Card> cards) {
-        return cards.stream()
-                .collect(Collectors.groupingBy(Card::figure))
-                .entrySet()
-                .stream()
-                .filter((figureCardsEntry -> figureCardsEntry.getValue().size() == 2))
-                .max(Comparator.comparing(figureCardsEntry -> figureCardsEntry.getKey().getValue()))
-                .map(Map.Entry::getValue);
-    }
+    HIGH_CARD("High Card", 0, List.of(1), false, SetsFinder::findHighestCard),
+    PAIR("Pair", 1, List.of(2), false, SetsFinder::findHighestPair),
+    TWO_PAIRS("Two Pairs", 2, List.of(2, 2), false, SetsFinder::findTwoHighestPairs),
+    SMALL_STRAIGHT("Small Straight", 3, List.of(), false, cards -> Optional.empty()),
+    HUGE_STRAIGHT("Huge Straight", 4, List.of(), false, cards -> Optional.empty()),
+    THREE_OF_KIND("Three of Kind", 5, List.of(3), false, cards -> Optional.empty()),
+    FULL("Full", 6, List.of(3, 2), false, cards -> Optional.empty()),
+    COLOR("Color", 7, List.of(), true, cards -> Optional.empty()),
+    FOUR_OF_KIND("Four of Kind", 8, List.of(4), false, cards -> Optional.empty()),
+    POKER("Poker", 9, List.of(), true, cards -> Optional.empty());
 
     Hand(String name, int value, List<Integer> neededAmounts, boolean fiveCardsInTheSameColor, Function<List<Card>, Optional<List<Card>>> findHighest) {
         this.name = name;
