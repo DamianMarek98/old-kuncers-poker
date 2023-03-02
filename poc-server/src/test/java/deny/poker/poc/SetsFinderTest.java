@@ -119,4 +119,45 @@ class SetsFinderTest {
         //then
         assertFalse(result.isPresent());
     }
+
+    @Test
+    void givenSetOfCardsWithThreeJacksFindHighestTrioShouldReturnThreeJacks() {
+        //given
+        var jack1 = new Card(Color.BLACK_CLUB, Figure.JACK);
+        var jack2 = new Card(Color.RED_HEART, Figure.JACK);
+        var jack3 = new Card(Color.RED_DIAMOND, Figure.JACK);
+        var cards = List.of(jack1, jack2, jack3, new Card(Color.BLACK_CLUB, Figure.ACE), new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
+        //when
+        var result = SetsFinder.findHighestTrio(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertEquals(List.of(jack1, jack2, jack3), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithThreeJacksAndThreeAcesFindHighestTrioShouldReturnThreeAces() {
+        //given
+        var jack1 = new Card(Color.BLACK_CLUB, Figure.JACK);
+        var jack2 = new Card(Color.RED_HEART, Figure.JACK);
+        var jack3 = new Card(Color.RED_DIAMOND, Figure.JACK);
+        var ace1 = new Card(Color.BLACK_CLUB, Figure.ACE);
+        var ace2 = new Card(Color.RED_HEART, Figure.ACE);
+        var ace3 = new Card(Color.RED_DIAMOND, Figure.ACE);
+        var cards = List.of(jack1, jack2, jack3, ace1, ace2, ace3, new Card(Color.BLACK_CLUB, Figure.ACE), new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
+        //when
+        var result = SetsFinder.findHighestTrio(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertEquals(List.of(ace1, ace2, ace3), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithNoTrioFindTwoHighestTrioShouldReturnEmptyResult() {
+        //given
+        var cards = List.of(new Card(Color.BLACK_CLUB, Figure.ACE), new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
+        //when
+        var result = SetsFinder.findHighestTrio(cards);
+        //then
+        assertFalse(result.isPresent());
+    }
 }
