@@ -37,6 +37,10 @@ public class SetsFinder {
         return findHighestSetOfOneFigure(cards, 3);
     }
 
+    public static Optional<List<Card>> findHighestFourOfKind(List<Card> cards) {
+        return findHighestSetOfOneFigure(cards, 4);
+    }
+
     private static Optional<List<Card>> findHighestSetOfOneFigure(List<Card> cards, int amount) {
         return cards.stream()
                 .collect(Collectors.groupingBy(Card::figure))

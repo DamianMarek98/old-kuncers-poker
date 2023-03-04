@@ -152,11 +152,55 @@ class SetsFinderTest {
     }
 
     @Test
-    void givenSetOfCardsWithNoTrioFindTwoHighestTrioShouldReturnEmptyResult() {
+    void givenSetOfCardsWithNoTrioFindHighestTrioShouldReturnEmptyResult() {
         //given
         var cards = List.of(new Card(Color.BLACK_CLUB, Figure.ACE), new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
         //when
         var result = SetsFinder.findHighestTrio(cards);
+        //then
+        assertFalse(result.isPresent());
+    }
+
+    @Test
+    void givenSetOfCardsWithFourJacksFindFourOfKindShouldReturnFourJacks() {
+        //given
+        var jack1 = new Card(Color.BLACK_CLUB, Figure.JACK);
+        var jack2 = new Card(Color.RED_HEART, Figure.JACK);
+        var jack3 = new Card(Color.RED_DIAMOND, Figure.JACK);
+        var jack4 = new Card(Color.BLACK_SPADE, Figure.JACK);
+        var cards = List.of(jack1, jack2, jack3, new Card(Color.BLACK_CLUB, Figure.ACE), jack4, new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
+        //when
+        var result = SetsFinder.findHighestFourOfKind(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertEquals(List.of(jack1, jack2, jack3, jack4), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithFourJacksAndFourAcesFindFourOfKindShouldReturnFourAces() {
+        //given
+        var jack1 = new Card(Color.BLACK_CLUB, Figure.JACK);
+        var jack2 = new Card(Color.RED_HEART, Figure.JACK);
+        var jack3 = new Card(Color.RED_DIAMOND, Figure.JACK);
+        var jack4 = new Card(Color.BLACK_SPADE, Figure.JACK);
+        var ace1 = new Card(Color.BLACK_CLUB, Figure.ACE);
+        var ace2 = new Card(Color.RED_HEART, Figure.ACE);
+        var ace3 = new Card(Color.RED_DIAMOND, Figure.ACE);
+        var ace4 = new Card(Color.BLACK_SPADE, Figure.ACE);
+        var cards = List.of(jack1, jack2, jack3, ace1, ace2, ace3, jack4, ace4, new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
+        //when
+        var result = SetsFinder.findHighestFourOfKind(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertEquals(List.of(ace1, ace2, ace3, ace4), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithNoFourOfKindFindFourOfKindShouldReturnEmptyResult() {
+        //given
+        var cards = List.of(new Card(Color.BLACK_CLUB, Figure.ACE), new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
+        //when
+        var result = SetsFinder.findHighestFourOfKind(cards);
         //then
         assertFalse(result.isPresent());
     }
