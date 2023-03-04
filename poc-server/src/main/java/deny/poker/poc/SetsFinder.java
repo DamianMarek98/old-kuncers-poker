@@ -14,13 +14,7 @@ public class SetsFinder {
     }
 
     public static Optional<List<Card>> findHighestPair(List<Card> cards) {
-        return cards.stream()
-                .collect(Collectors.groupingBy(Card::figure))
-                .entrySet()
-                .stream()
-                .filter((figureCardsEntry -> figureCardsEntry.getValue().size() == 2))
-                .max(Comparator.comparing(figureCardsEntry -> figureCardsEntry.getKey().getValue()))
-                .map(Map.Entry::getValue);
+        return findHighestSetOfOneFigure(cards, 2);
     }
 
     public static Optional<List<Card>> findTwoHighestPairs(List<Card> cards) {
@@ -37,5 +31,19 @@ public class SetsFinder {
         var pairs = highestPair.get();
         pairs.addAll(secondHighestPair.get());
         return Optional.of(pairs);
+    }
+
+    public static Optional<List<Card>> findHighestTrio(List<Card> cards) {
+        return findHighestSetOfOneFigure(cards, 3);
+    }
+
+    private static Optional<List<Card>> findHighestSetOfOneFigure(List<Card> cards, int amount) {
+        return cards.stream()
+                .collect(Collectors.groupingBy(Card::figure))
+                .entrySet()
+                .stream()
+                .filter((figureCardsEntry -> figureCardsEntry.getValue().size() == amount))
+                .max(Comparator.comparing(figureCardsEntry -> figureCardsEntry.getKey().getValue()))
+                .map(Map.Entry::getValue);
     }
 }

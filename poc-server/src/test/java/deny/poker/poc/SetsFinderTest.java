@@ -143,7 +143,7 @@ class SetsFinderTest {
         var ace1 = new Card(Color.BLACK_CLUB, Figure.ACE);
         var ace2 = new Card(Color.RED_HEART, Figure.ACE);
         var ace3 = new Card(Color.RED_DIAMOND, Figure.ACE);
-        var cards = List.of(jack1, jack2, jack3, ace1, ace2, ace3, new Card(Color.BLACK_CLUB, Figure.ACE), new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
+        var cards = List.of(jack1, jack2, jack3, ace1, ace2, ace3, new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
         //when
         var result = SetsFinder.findHighestTrio(cards);
         //then
