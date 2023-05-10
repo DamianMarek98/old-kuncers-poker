@@ -204,4 +204,44 @@ class SetsFinderTest {
         //then
         assertFalse(result.isPresent());
     }
+
+    @Test
+    void givenSetOfCardsWithAllFiguresFindHighestStraightShouldReturnStraightFromTenToAce() {
+        //given
+        Card ten = new Card(Color.BLACK_CLUB, Figure.TEN);
+        Card jack = new Card(Color.BLACK_CLUB, Figure.JACK);
+        Card queen = new Card(Color.RED_DIAMOND, Figure.QUEEN);
+        Card king = new Card(Color.BLACK_CLUB, Figure.KING);
+        Card ace = new Card(Color.RED_HEART, Figure.ACE);
+        var cards = List.of(new Card(Color.BLACK_CLUB, Figure.NINE), ten, jack, queen, king, ace);
+        //when
+        var result = SetsFinder.findHighestStraight(cards);
+        //then
+        assertEquals(List.of(ten, jack,  queen, king, ace), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithAllFiguresFromNineToAceFindHighestStraightShouldReturnStraightFromNineToAce() {
+        //given
+        Card nine = new Card(Color.RED_HEART, Figure.NINE);
+        Card ten = new Card(Color.BLACK_CLUB, Figure.TEN);
+        Card jack = new Card(Color.BLACK_CLUB, Figure.JACK);
+        Card queen = new Card(Color.RED_DIAMOND, Figure.QUEEN);
+        Card king = new Card(Color.BLACK_CLUB, Figure.KING);
+        var cards = List.of(nine, ten, jack, queen, king, new Card(Color.RED_HEART, Figure.JACK));
+        //when
+        var result = SetsFinder.findHighestStraight(cards);
+        //then
+        assertEquals(List.of(nine, ten, jack,  queen, king), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithNoStraightFindHighestStraightShouldReturnEmptyResult() {
+        //given
+        var cards = List.of(new Card(Color.BLACK_CLUB, Figure.ACE), new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
+        //when
+        var result = SetsFinder.findHighestStraight(cards);
+        //then
+        assertFalse(result.isPresent());
+    }
 }
