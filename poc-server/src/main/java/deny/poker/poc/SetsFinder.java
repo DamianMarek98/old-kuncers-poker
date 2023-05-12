@@ -50,4 +50,37 @@ public class SetsFinder {
                 .max(Comparator.comparing(figureCardsEntry -> figureCardsEntry.getKey().getValue()))
                 .map(Map.Entry::getValue);
     }
+
+    public static Optional<Integer> findHighestStraightTopCardValue(List<Card> cards) {
+        var sortedCardsValues = cards.stream()
+                .map(Card::figure)
+                .map(Figure::getValue)
+                .distinct()
+                .sorted()
+                .toList();
+        if (sortedCardsValues.size() < 5) {
+            return Optional.empty();
+        }
+
+        var prevValue = sortedCardsValues.get(sortedCardsValues.size() - 1);
+        var sequenceLength = 1;
+        for (int i = sortedCardsValues.size() - 2; i >= 0; i--) {
+            if (prevValue - sortedCardsValues.get(i) == 1) {
+                sequenceLength++;
+                prevValue = sortedCardsValues.get(i);
+            }
+
+            if (sequenceLength == 5) {
+                return Optional.of(prevValue + 4);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    public static Optional<Color> findHighestColour(List<Card> cards) {
+        cards.f
+
+        return Optional.empty();
+    }
 }

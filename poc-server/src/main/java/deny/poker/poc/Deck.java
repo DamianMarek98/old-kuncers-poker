@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    public final List<Card> cards;
+    private final List<Card> cards;
 
     public Deck() {
         this.cards = generateDeck();
@@ -23,5 +23,9 @@ public class Deck {
 
     public void shuffleDeck() {
         Collections.shuffle(cards);
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
