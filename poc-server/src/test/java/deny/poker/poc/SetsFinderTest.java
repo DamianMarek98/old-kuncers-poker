@@ -263,7 +263,7 @@ class SetsFinderTest {
     }
 
     @Test
-    void givenSetOfCardsWithFiveBlackClubsFindHighestColourShouldReturnBlackClubs() {
+    void givenSetOfCardsWithFiveBlackClubsFindHighestColorShouldReturnBlackClubs() {
         //given
         Card ten = new Card(Color.BLACK_CLUB, Figure.TEN);
         Card jack = new Card(Color.BLACK_CLUB, Figure.JACK);
@@ -297,7 +297,7 @@ class SetsFinderTest {
     }
 
     @Test
-    void givenSetOfCardsWithAllCardsFindHighestColourShouldReturnBlackSpades() {
+    void givenSetOfCardsWithAllCardsFindHighestColorShouldReturnBlackSpades() {
         //given
         var deck = new Deck();
         //when
@@ -308,7 +308,7 @@ class SetsFinderTest {
     }
 
     @Test
-    void givenSetOfCardsWithNoColourFindHighestColourShouldReturnEmptyResult() {
+    void givenSetOfCardsWithNoColorFindHighestColorShouldReturnEmptyResult() {
         //given
         Card nine = new Card(Color.RED_HEART, Figure.NINE);
         Card ten = new Card(Color.BLACK_CLUB, Figure.TEN);
