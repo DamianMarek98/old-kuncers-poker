@@ -248,6 +248,21 @@ class SetsFinderTest {
     }
 
     @Test
+    void givenSetOfCardsWithMoreThanFourCardsAndNoStraightFindHighestStraightShouldReturnEmptyResult() {
+        //given
+        var cards = List.of(new Card(Color.BLACK_CLUB, Figure.ACE),
+                new Card(Color.BLACK_CLUB, Figure.KING),
+                new Card(Color.BLACK_CLUB, Figure.NINE),
+                new Card(Color.RED_DIAMOND, Figure.QUEEN),
+                new Card(Color.BLACK_CLUB, Figure.JACK),
+                new Card(Color.RED_HEART, Figure.ACE));
+        //when
+        var result = SetsFinder.findHighestStraightTopCardValue(cards);
+        //then
+        assertFalse(result.isPresent());
+    }
+
+    @Test
     void givenSetOfCardsWithFiveBlackClubsFindHighestColourShouldReturnBlackClubs() {
         //given
         Card ten = new Card(Color.BLACK_CLUB, Figure.TEN);
@@ -259,23 +274,23 @@ class SetsFinderTest {
         Card redHeart = new Card(Color.RED_HEART, Figure.ACE);
         var cards = List.of(redDiamond, redHeart, ten, jack, queen, nine, ace);
         //when
-        var result = SetsFinder.findHighestStraightTopCardValue(cards);
+        var result = SetsFinder.findHighestColor(cards);
         //then
         assertTrue(result.isPresent());
-        assertEquals(ace.figure().getValue(), result.get());
+        assertEquals(Color.BLACK_CLUB, result.get());
     }
 
     @Test
-    void givenSetOfCardsWithAllFiguresFromNineToAceFindHighestStraightShouldReturnStraightFromNineToAce() {
+    void givenSetOfCardsWithBlackClubColorFindHighestColorShouldReturnBlackClubs() {
         //given
-        Card nine = new Card(Color.RED_HEART, Figure.NINE);
+        Card nine = new Card(Color.BLACK_CLUB, Figure.NINE);
         Card ten = new Card(Color.BLACK_CLUB, Figure.TEN);
         Card jack = new Card(Color.BLACK_CLUB, Figure.JACK);
-        Card queen = new Card(Color.RED_DIAMOND, Figure.QUEEN);
+        Card queen = new Card(Color.BLACK_CLUB, Figure.QUEEN);
         Card king = new Card(Color.BLACK_CLUB, Figure.KING);
         var cards = List.of(nine, ten, jack, queen, king, new Card(Color.RED_HEART, Figure.JACK));
         //when
-        var result = SetsFinder.findHighestColour(cards);
+        var result = SetsFinder.findHighestColor(cards);
         //then
         assertTrue(result.isPresent());
         assertEquals(Color.BLACK_CLUB, result.get());
@@ -286,7 +301,7 @@ class SetsFinderTest {
         //given
         var deck = new Deck();
         //when
-        var result = SetsFinder.findHighestColour(deck.getCards());
+        var result = SetsFinder.findHighestColor(deck.getCards());
         //then
         assertTrue(result.isPresent());
         assertEquals(Color.BLACK_SPADE, result.get());
@@ -302,7 +317,7 @@ class SetsFinderTest {
         Card king = new Card(Color.BLACK_CLUB, Figure.KING);
         var cards = List.of(nine, ten, jack, queen, king, new Card(Color.RED_HEART, Figure.JACK));
         //when
-        var result = SetsFinder.findHighestColour(cards);
+        var result = SetsFinder.findHighestColor(cards);
         //then
         assertFalse(result.isPresent());
     }

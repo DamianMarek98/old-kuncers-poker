@@ -78,9 +78,14 @@ public class SetsFinder {
         return Optional.empty();
     }
 
-    public static Optional<Color> findHighestColour(List<Card> cards) {
-        cards.f
-
-        return Optional.empty();
+    public static Optional<Color> findHighestColor(List<Card> cards) {
+        return cards.stream()
+                .collect(Collectors.groupingBy(Card::color, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() >= 5)
+                .sorted(Map.Entry.comparingByKey())
+                .map(Map.Entry::getKey)
+                .findFirst();
     }
 }
