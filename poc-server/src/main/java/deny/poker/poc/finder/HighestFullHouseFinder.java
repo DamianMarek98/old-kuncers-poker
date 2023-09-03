@@ -1,6 +1,7 @@
 package deny.poker.poc.finder;
 
 import deny.poker.poc.Card;
+import deny.poker.poc.Figure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,13 +23,16 @@ class HighestFullHouseFinder implements SetFinder {
 
     @Override
     public Optional<List<Card>> find(List<Card> cards) {
-        var pair = highestPairFinder.find(cards);
-        if (pair.isEmpty()) {
-            return Optional.empty();
-        }
-        //todo remove figure of pair
         var trio = highestTrioFinder.find(cards);
         if (trio.isEmpty()) {
+            return Optional.empty();
+        }
+        final Figure trioFigure = trio.get().get(0).figure();
+        var cardsToFindPair = cards.stream()
+                .filter(card -> !card.figure().equals(trioFigure))
+                .toList();
+        var pair = highestPairFinder.find(cardsToFindPair);
+        if (pair.isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(Stream.of(pair, trio)

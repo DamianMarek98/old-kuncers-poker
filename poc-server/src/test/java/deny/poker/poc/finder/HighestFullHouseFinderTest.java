@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.groupingBy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,7 +36,7 @@ class HighestFullHouseFinderTest {
     }
 
     @Test
-    void givenSetOfCardsWithThreeJacksAndPairOfNinesAndThreeAcesFindHighestFullHouseShouldReturnThreeAcesAndPairOfNines() {
+    void givenSetOfCardsWithThreeJacksAndPairOfNinesAndThreeAcesFindHighestFullHouseShouldReturnThreeAcesAndPairOfJacks() {
         //given
         var jack1 = new Card(Color.BLACK_CLUB, Figure.JACK);
         var jack2 = new Card(Color.RED_HEART, Figure.JACK);
@@ -50,7 +51,10 @@ class HighestFullHouseFinderTest {
         var result = highestFullHouseFinder.find(cards);
         //then
         assertTrue(result.isPresent());
-        assertThat(result.get()).containsExactlyInAnyOrder(ace1, ace2, ace3, nine1, nine2);
+        var figureCardsResultMap = result.get().stream().collect(groupingBy(Card::figure));
+        assertThat(figureCardsResultMap).containsOnlyKeys(Figure.ACE, Figure.JACK);
+        assertThat(figureCardsResultMap.get(Figure.ACE)).hasSize(3);
+        assertThat(figureCardsResultMap.get(Figure.JACK)).hasSize(2);
     }
 
     @Test
