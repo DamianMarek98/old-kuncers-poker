@@ -18,8 +18,9 @@ class SetOfOneFigureFinder {
                 .collect(Collectors.groupingBy(Card::figure))
                 .entrySet()
                 .stream()
-                .filter((figureCardsEntry -> figureCardsEntry.getValue().size() == amount))
+                .filter((figureCardsEntry -> figureCardsEntry.getValue().size() >= amount))
                 .max(Comparator.comparing(figureCardsEntry -> figureCardsEntry.getKey().getValue()))
-                .map(Map.Entry::getValue);
+                .map(Map.Entry::getValue)
+                .map(set -> set.subList(0, amount));
     }
 }

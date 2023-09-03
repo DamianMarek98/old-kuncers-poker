@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -28,6 +29,21 @@ class HighestPairFinderTest {
         //then
         assertTrue(result.isPresent());
         assertEquals(List.of(ace1, ace2), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithThreeAcesFindHighestCardShouldReturnPairOfAces() {
+        //given
+        final Card ace1 = new Card(Color.RED_DIAMOND, Figure.ACE);
+        final Card ace2 = new Card(Color.BLACK_CLUB, Figure.ACE);
+        final Card ace3 = new Card(Color.BLACK_CLUB, Figure.ACE);
+        var cards = List.of(ace1, ace2, ace3, new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.RED_DIAMOND, Figure.NINE));
+        //when
+        var result = highestPairFinder.find(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertThat(result.get()).hasSize(2);
+        assertTrue(result.get().stream().allMatch(card -> card.figure().equals(Figure.ACE)));
     }
 
     @Test

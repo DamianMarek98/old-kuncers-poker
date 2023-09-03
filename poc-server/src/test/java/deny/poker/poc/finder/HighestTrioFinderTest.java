@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -28,6 +29,22 @@ class HighestTrioFinderTest {
         //then
         assertTrue(result.isPresent());
         assertEquals(List.of(jack1, jack2, jack3), result.get());
+    }
+
+    @Test
+    void givenSetOfCardsWithFourJacksFindHighestTrioShouldReturnThreeJacks() {
+        //given
+        var jack1 = new Card(Color.BLACK_CLUB, Figure.JACK);
+        var jack2 = new Card(Color.RED_HEART, Figure.JACK);
+        var jack3 = new Card(Color.RED_DIAMOND, Figure.JACK);
+        var jack4 = new Card(Color.RED_DIAMOND, Figure.JACK);
+        var cards = List.of(jack1, jack2, jack3, jack4, new Card(Color.BLACK_CLUB, Figure.ACE), new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.BLACK_CLUB, Figure.NINE));
+        //when
+        var result = highestTrioFinder.find(cards);
+        //then
+        assertTrue(result.isPresent());
+        assertThat(result.get()).hasSize(3);
+        assertTrue(result.get().stream().allMatch(card -> card.figure().equals(Figure.JACK)));
     }
 
     @Test
