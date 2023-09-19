@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-public class HighestSetFinderTest {
+class HighestSetFinderTest {
     @Autowired
     private HighestSetFinder highestSetFinder;
 
@@ -163,7 +163,7 @@ public class HighestSetFinderTest {
         var king = new Card(Color.BLACK_SPADE, Figure.KING);
         var king2 = new Card(Color.RED_DIAMOND, Figure.KING);
         var king3 = new Card(Color.BLACK_CLUB, Figure.KING);
-        var cards = List.of(nine, nine2, nine3, ten, jack, queen, king, king2);
+        var cards = List.of(nine, nine2, nine3, ten, jack, queen, king, king2, king3);
         //when
         var result = highestSetFinder.find(cards);
         //then
