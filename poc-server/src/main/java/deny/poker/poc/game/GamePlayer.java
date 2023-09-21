@@ -43,4 +43,15 @@ public class GamePlayer {
     Set<Card> getHand() {
         return hand;
     }
+
+    @Override
+    public String toString() {
+        var handStringBuilder = new StringBuilder();
+        hand.forEach(card -> handStringBuilder.append(card.toString()).append('\''));
+        return "GamePlayer{" +
+                "name='" + name + '\'' +
+                "cards=" + '\'' +
+                handStringBuilder +
+                '}';
+    }
 }
