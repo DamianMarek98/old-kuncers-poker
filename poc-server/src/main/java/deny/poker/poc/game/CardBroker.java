@@ -3,9 +3,13 @@ package deny.poker.poc.game;
 import deny.poker.poc.Card;
 import deny.poker.poc.Color;
 import deny.poker.poc.Figure;
+import deny.poker.poc.game.events.GameStartedEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 class CardBroker {
     private final List<Card> deck = new ArrayList<>();
     private final int numberOfAvailableCards;
@@ -39,4 +43,8 @@ class CardBroker {
         }
     }
 
+    @EventListener
+    public void dealCards(GameStartedEvent gameStartedEvent) {
+        dealCards(gameStartedEvent.game().getPlayers());
+    }
 }

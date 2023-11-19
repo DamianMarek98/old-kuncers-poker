@@ -42,4 +42,13 @@ public class HighestSetFinder implements SetFinder {
                 .findFirst()
                 .orElse(Optional.empty());
     }
+
+    public SetRank findHighestSet(List<Card> cards) {
+        return Arrays.stream(SetRank.values())
+                .sorted(Comparator.comparingInt(SetRank::getRank))
+                .sorted(Comparator.reverseOrder())
+                .filter(setRank -> setFinderMap.get(setRank).find(cards).isPresent())
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No sets found ..."));
+    }
 }
