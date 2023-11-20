@@ -13,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-class HighCardFinderTest {
+class HighestHighCardFinderTest {
     @Autowired
-    private HighCardFinder highCardFinder;
+    private HighestHighCardFinder highestHighCardFinder;
 
     @Test
     void givenSetOfCardsWithAceFindHighestCardShouldReturnAce() {
@@ -23,7 +23,7 @@ class HighCardFinderTest {
         final Card ace = new Card(Color.RED_DIAMOND, Figure.ACE);
         var cards = List.of(ace, new Card(Color.BLACK_CLUB, Figure.KING), new Card(Color.RED_DIAMOND, Figure.NINE));
         //when
-        var result = highCardFinder.find(cards);
+        var result = highestHighCardFinder.find(cards);
         //then
         assertTrue(result.isPresent());
         assertEquals(List.of(ace), result.get());
@@ -35,7 +35,7 @@ class HighCardFinderTest {
         final Card jack = new Card(Color.RED_DIAMOND, Figure.JACK);
         var cards = List.of(jack, new Card(Color.BLACK_CLUB, Figure.TEN), new Card(Color.RED_DIAMOND, Figure.JACK));
         //when
-        var result = highCardFinder.find(cards);
+        var result = highestHighCardFinder.find(cards);
         //then
         assertTrue(result.isPresent());
         assertEquals(List.of(jack), result.get());

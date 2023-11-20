@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-class HighCardFinder implements SetFinder {
+class HighestHighCardFinder implements SetFinder {
     @Override
     public Optional<List<Card>> find(List<Card> cards) {
         return cards.stream()

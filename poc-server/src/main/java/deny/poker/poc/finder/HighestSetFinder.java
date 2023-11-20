@@ -12,7 +12,7 @@ public class HighestSetFinder implements SetFinder {
     private final EnumMap<SetRank, SetFinder> setFinderMap = new EnumMap<>(SetRank.class);
 
     @Autowired
-    HighestSetFinder(HighCardFinder highCardFinder,
+    HighestSetFinder(HighestHighCardFinder highestHighCardFinder,
                      HighestPairFinder highestPairFinder,
                      HighestTwoPairsFinder highestTwoPairsFinder,
                      HighestStraightFinder highestStraightFinder,
@@ -21,7 +21,7 @@ public class HighestSetFinder implements SetFinder {
                      HighestFourOfKindFinder highestFourOfKindFinder,
                      HighestColorFinder highestColorFinder,
                      HighestPokerFinder highestPokerFinder) {
-        setFinderMap.put(SetRank.HIGH_CARD, highCardFinder);
+        setFinderMap.put(SetRank.HIGH_CARD, highestHighCardFinder);
         setFinderMap.put(SetRank.PAIR, highestPairFinder);
         setFinderMap.put(SetRank.TWO_PAIRS, highestTwoPairsFinder);
         setFinderMap.put(SetRank.STRAIGHT, highestStraightFinder);
