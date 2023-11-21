@@ -10,6 +10,6 @@ import java.util.Optional;
 class HighestTrioFinder implements SetFinder {
     @Override
     public Optional<List<Card>> find(List<Card> cards) {
-        return SetOfOneFigureFinder.findHighestSetOfOneFigure(cards, 3);
+        return HighestSetOfOneFigureFinder.findHighestSetOfOneFigure(cards, 3);
     }
 }

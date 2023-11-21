@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-class HighCardChecker implements SetChecker {
+class PairChecker implements SetChecker {
     @Override
     @CheckerValidator(figureRequired = true)
     public boolean contains(List<Card> cards, Figure figure, Color color) {
-        return cards.stream().anyMatch(card -> card.figure().equals(figure));
+        return SetOfOneFigureChecker.containsSetOfOneFigure(cards, figure, 2);
     }
 }

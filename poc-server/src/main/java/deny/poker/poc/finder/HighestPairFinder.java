@@ -11,6 +11,6 @@ import java.util.Optional;
 class HighestPairFinder implements SetFinder {
     @Override
     public Optional<List<Card>> find(List<Card> cards) {
-        return SetOfOneFigureFinder.findHighestSetOfOneFigure(cards, 2);
+        return HighestSetOfOneFigureFinder.findHighestSetOfOneFigure(cards, 2);
     }
 }

@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class SetOfOneFigureFinder {
+class HighestSetOfOneFigureFinder {
 
-    private SetOfOneFigureFinder() {
+    private HighestSetOfOneFigureFinder() {
     }
 
     static Optional<List<Card>> findHighestSetOfOneFigure(List<Card> cards, int amount) {

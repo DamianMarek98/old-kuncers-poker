@@ -10,6 +10,6 @@ import java.util.Optional;
 class HighestFourOfKindFinder implements SetFinder {
     @Override
     public Optional<List<Card>> find(List<Card> cards) {
-        return SetOfOneFigureFinder.findHighestSetOfOneFigure(cards, 4);
+        return HighestSetOfOneFigureFinder.findHighestSetOfOneFigure(cards, 4);
     }
 }
