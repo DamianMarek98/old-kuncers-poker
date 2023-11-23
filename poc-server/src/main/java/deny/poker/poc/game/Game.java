@@ -49,6 +49,15 @@ public class Game {
         return players;
     }
 
+    public void rise(CardsSet cardsSet) {
+        setCurrentCardsSet(cardsSet);
+        nextPlayer();
+    }
+
+    public List<Card> getCardsInPlay() {
+        return players.stream().flatMap(gamePlayer -> gamePlayer.getHand().stream()).toList();
+    }
+
     @Override
     public String toString() {
         return "Game{" +
@@ -57,14 +66,5 @@ public class Game {
                 ", currentPlayerIndex=" + currentPlayerIndex +
                 ", currentCardsSet=" + currentCardsSet +
                 '}';
-    }
-
-    public void rise(CardsSet cardsSet) {
-        currentCardsSet = cardsSet;
-        nextPlayer();
-    }
-
-    public List<Card> getCardsInPlay() {
-        return players.stream().flatMap(gamePlayer -> gamePlayer.getHand().stream()).toList();
     }
 }
