@@ -29,7 +29,7 @@ public class GamePlayer {
     }
 
     boolean hasEnoughCards() {
-        return numOfCards == hand.size();
+        return isEliminated() || numOfCards == hand.size();
     }
 
     void clearHand() {
@@ -44,12 +44,21 @@ public class GamePlayer {
         return hand;
     }
 
+    boolean isEliminated() {
+        return numOfCards == 5;
+    }
+
+    boolean isPlaying() {
+        return numOfCards < 5;
+    }
+
     @Override
     public String toString() {
         var handStringBuilder = new StringBuilder();
         hand.forEach(card -> handStringBuilder.append(card.toString()).append('\''));
         return "GamePlayer{" +
                 "name='" + name + '\'' +
+                "numberOfCards=" + numOfCards +  '\'' +
                 "cards=" + '\'' +
                 handStringBuilder +
                 '}';

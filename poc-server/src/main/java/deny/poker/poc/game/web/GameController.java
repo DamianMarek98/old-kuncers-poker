@@ -6,10 +6,7 @@ import deny.poker.poc.game.web.request.StartGameRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,8 +31,13 @@ public class GameController {
     }
 
     @PostMapping("/check")
-    public ResponseEntity<Void> decision() {
+    public ResponseEntity<Void> check() {
         gameService.check();
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<String> getGameState() {
+        return ResponseEntity.ok(gameService.getCurrentGame().toString());
     }
 }

@@ -4,6 +4,7 @@ import deny.poker.poc.Card;
 import deny.poker.poc.Color;
 import deny.poker.poc.Figure;
 import deny.poker.poc.game.events.GameStartedEvent;
+import deny.poker.poc.game.events.RoundFinishedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +32,7 @@ class CardBroker {
         players.forEach(GamePlayer::clearHand);
         while (!players.stream().allMatch(GamePlayer::hasEnoughCards)) {
             players.forEach(player -> {
-                if (!player.hasEnoughCards()) {
+                if (player.isPlaying() && !player.hasEnoughCards()) {
                     Card cardToDeal;
                     do {
                         cardToDeal = deck.get(random.nextInt(0, numberOfAvailableCards));
@@ -44,7 +45,14 @@ class CardBroker {
     }
 
     @EventListener
-    public void dealCards(GameStartedEvent gameStartedEvent) {
+    public void dealCardsWhenGameStarts(GameStartedEvent gameStartedEvent) {
         dealCards(gameStartedEvent.game().getPlayers());
+        //todo cardDealt event -> round starts
+    }
+
+    @EventListener
+    public void dealCardsForNewRound(RoundFinishedEvent roundFinishedEvent) {
+        dealCards(roundFinishedEvent.game().getPlayers());
+        //todo cardDealt event -> round starts
     }
 }

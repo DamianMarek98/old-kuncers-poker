@@ -5,7 +5,7 @@ public record Card(Color color, Figure figure) {
     public String toString() {
         return "Card{" +
                 "color=" + color +
-                ", figure=" + figure +
+                ", figure1=" + figure +
                 '}';
     }
 }

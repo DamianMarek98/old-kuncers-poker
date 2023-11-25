@@ -9,8 +9,7 @@ import java.util.UUID;
 
 public class Game {
     private final UUID id = UUID.randomUUID();
-    private final List<GamePlayer> players = new ArrayList<>();
-    private Integer currentPlayerIndex;
+    private final GamePlayers gamePlayers;
     private CardsSet currentCardsSet;
 
     public void setCurrentCardsSet(CardsSet currentCardsSet) {
@@ -22,48 +21,55 @@ public class Game {
     }
 
     Game(int numberOfPlayer) {
+        final List<GamePlayer> players = new ArrayList<>();
         for (int i = 0; i < numberOfPlayer; i++) {
             players.add(new GamePlayer("Player num:" + i));
         }
-        //todo should be random
-        currentPlayerIndex = 0;
+        //todo should be random, or list should be shuffled
+        gamePlayers = new GamePlayers(players);
     }
 
-    GamePlayer nextPlayer() {
-        if (currentPlayerIndex == null) {
-            currentPlayerIndex = 0;
-            return players.get(currentPlayerIndex);
-        }
-        currentPlayerIndex++;
-        if (currentPlayerIndex == players.size()) {
-            currentPlayerIndex = 0;
-        }
-        return players.get(currentPlayerIndex);
-    }
 
     boolean isEnd() {
-        return players.size() == 1;
+        return gamePlayers.isOnlyOnePlayerPlayingLeft();
     }
 
     List<GamePlayer> getPlayers() {
-        return players;
+        return gamePlayers.getPlayers();
     }
 
     public void rise(CardsSet cardsSet) {
         setCurrentCardsSet(cardsSet);
-        nextPlayer();
+        gamePlayers.nextPlayer();
     }
 
     public List<Card> getCardsInPlay() {
-        return players.stream().flatMap(gamePlayer -> gamePlayer.getHand().stream()).toList();
+        return gamePlayers.getPlayers().stream().flatMap(gamePlayer -> gamePlayer.getHand().stream()).toList();
+    }
+
+    public void drawCardForPreviousPlayer() {
+        var previousPlayer = gamePlayers.getPreviousPlayer();
+        previousPlayer.setNumOfCards(previousPlayer.getNumOfCards() + 1);
+        if (previousPlayer.isPlaying()) {
+            gamePlayers.previousPlayer();
+        }
+        currentCardsSet = null;
+    }
+
+    public void drawCardForCurrentPlayer() {
+        var currentPlayer = gamePlayers.getCurrentPlayer();
+        currentPlayer.setNumOfCards(currentPlayer.getNumOfCards() + 1);
+        if (currentPlayer.isEliminated()) {
+            gamePlayers.nextPlayer();
+        }
+        currentCardsSet = null;
     }
 
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
-                ", players=" + players +
-                ", currentPlayerIndex=" + currentPlayerIndex +
+                ", players=" + gamePlayers +
                 ", currentCardsSet=" + currentCardsSet +
                 '}';
     }
