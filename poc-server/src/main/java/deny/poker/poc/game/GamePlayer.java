@@ -14,6 +14,7 @@ public class GamePlayer {
 
     GamePlayer(String name) {
         this.name = name;
+        hand = new HashSet<>();
     }
 
     UUID getId() {
@@ -41,7 +42,7 @@ public class GamePlayer {
     }
 
     Set<Card> getHand() {
-        return hand;
+        return new HashSet<>(hand);
     }
 
     boolean isEliminated() {

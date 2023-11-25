@@ -33,7 +33,7 @@ public class GameService {
     }
 
     public void riseToHighCard(Figure figure) {
-        //todo whole validation
+        //todo whole validation -> next up implement this
         game.rise(new CardsSet(SetRank.HIGH_CARD, figure, null, null));
     }
 
