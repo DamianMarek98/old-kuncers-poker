@@ -9,7 +9,6 @@ final class GamePlayers {
     GamePlayers(List<GamePlayer> players) {
         this.players = players.stream().toList();
     }
-
     void nextPlayer() {
         do {
             currentPlayerIndex++;
@@ -21,9 +20,10 @@ final class GamePlayers {
 
     void previousPlayer() {
         do {
-            currentPlayerIndex--;
             if (currentPlayerIndex == 0) {
                 currentPlayerIndex = players.size() - 1;
+            } else {
+                currentPlayerIndex--;
             }
         } while (players.get(currentPlayerIndex).isEliminated());
     }
@@ -32,9 +32,10 @@ final class GamePlayers {
         var playerIndex = currentPlayerIndex;
 
         do {
-            playerIndex--;
             if (playerIndex == 0) {
                 playerIndex = players.size() - 1;
+            } else {
+                playerIndex--;
             }
         } while (players.get(playerIndex).isEliminated());
         return players.get(playerIndex);
