@@ -44,7 +44,9 @@ public class Game {
     }
 
     public List<Card> getCardsInPlay() {
-        return gamePlayers.getPlayers().stream().flatMap(gamePlayer -> gamePlayer.getHand().stream()).toList();
+        return gamePlayers.getPlayers().stream()
+                .flatMap(gamePlayer -> gamePlayer.getHand().stream())
+                .toList();
     }
 
     public void drawCardForPreviousPlayer() {
